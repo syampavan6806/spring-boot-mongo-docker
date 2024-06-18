@@ -1,0 +1,29 @@
+version: "3"
+services:
+   springapp:
+     image: dockersyampawan/spring-boot-mongo:VERSION
+     ports:
+     - 8080:8080
+     depends_on:
+     - mongo
+     environment:
+     - MONGO_DB_HOSTNAME=mongo
+     - MONGO_DB_USERNAME=devdb
+     - MONGO_DB_PASSWORD=devdb@123
+     networks:
+     - springappbridge
+   mongo:
+      image: mongo
+      environment:
+      - MONGO_INITDB_ROOT_USERNAME=devdb
+      - MONGO_INITDB_ROOT_PASSWORD=devdb@123
+      networks:
+      - springappbridge
+      volumes:
+      - mongovol:/data/db
+networks:
+  springappbridge:
+      driver: bridge
+volumes:
+   mongovol:
+      driver: local 
